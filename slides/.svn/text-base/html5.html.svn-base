@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<!--
+  Copyright 2011 Valtech SA
+  Same licence as below.
+
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  Copyright 2010 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  Original slides: Marcin Wichary (mwichary@google.com)
+  Modifications: Chrome DevRel Team (chrome-devrel@googlegroups.com)
+                 Alex Russell (slightlyoff@chromium.org)
+                 Brad Neuberg
+-->
+<html>  
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1" />
+    <title>Le Web a-t-il besoin de HTML5 ?</title>
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Just+Another+Hand" rel="stylesheet" type="text/css">
+    <link id="prettify-link" href="src/prettify/prettify.css" rel="stylesheet" />
+    <link href="css/valtech.css" class="theme" rel="stylesheet" />
+    <link href="imgs/favicon.ico" type="image/x-icon" rel="shortcut icon" />
+  </head>
+  <body>
+    <div class="presentation">
+		<img id="websocketConnectionImage" src="imgs/connect.png" title="Connected to server" />
+		<img id="websocketMasterImage" src="imgs/controller.png" title="You're the master" />
+      <div id="presentation-counter">Loading...</div>
+      <div class="slides">
+        <div class="slide" id="landing-slide">
+          <section class="middle">
+            <p>Cette présentation est un site HTML5</p>
+            <p>Appuyez sur la touche <span id="left-init-key" class="key">&rarr;</span> pour avancer.</p>
+          </section>
+        </div>
+
+        <div class="slide" id="controls-slide">
+          <section>
+            <p>Contrôles :</p>
+            <ul>
+              <li><span class="key">&larr;</span> et <span class="key">&rarr;</span> pour vous déplacer.</li>
+              <li><span class="key">Ctrl/Command</span> et <span class="key">+</span> ou <span class="key">-</span> pour zoomer/dézoomer.</li>
+              <li><span class="key">H</span> pour afficher/cache la syntaxe.</li>
+            </ul>
+          </section>
+        </div>
+     
+        <div class="slide" id="title-slide">
+          <style>
+				#title-slide, #last-slide {
+					color: white;
+					background-color: black;
+					background: url(imgs/valtech-days-with-date_small.png) 12% 10% no-repeat,
+						url(imgs/background_top.png) top left repeat-x,
+						url(imgs/valtech_small.png) 96% 95% no-repeat,
+						black;
+				}
+            #title-slide h1, #last-slide h1 {
+					font-size: 40px;
+					font-weight: bold;
+					position: absolute;
+					top: 38%; left: 10%;
+            }
+				#title-slide ul, #last-slide ul {
+					position: absolute;
+					top: 50%; left: 6%;
+				}
+				#title-slide ul li, #last-slide ul li {
+					font-size: 16px;
+					margin: 2em 4em 0 0;
+					float: left;
+				}
+            #title-slide ul li h2, #last-slide ul li h2 {
+					font-size: 20px;
+				}
+				#title-slide img, #last-slide img {
+					position: absolute;
+					left: 90px;
+					top: 500px;
+				}
+          </style>
+          <section>
+				<hgroup>
+					<h1>Le Web a-t-il besoin de HTML5 ?</h1>
+					<ul>
+						<li><h2>Patrick Antivackis</h2>Directeur Technique</li>
+						<li><h2>Grégory Paul</h2>Développeur Agile</li>
+					</ul>
+				</hgroup>
+          </section>
+        </div>
+
+        <div class="slide" id="toc-slide">
+			 <style>
+				#toc-slide ul li { margin: 0.1em 0; }
+				#toc-slide ul.small li { list-style: none; font-size: 30px; line-height: 20px; padding: 0.25em; width: 380px; }
+				#toc-slide img.small { height: 38px; width: 38px; }
+				#toc-slide ul.small img { height: 30px; width: 30px; margin-right: 0.25em; }
+			 </style>
+          <section>
+				<h2>Plan</h2>
+				<ul>
+					<li>Contexte</li>
+					<li>
+						<!--img src="imgs/HTML5_Logo_256.png" title="" alt="" class="small" /--> HTML5 :
+						<ul class="small two-columns">
+							<li><img src="imgs/HTML5_Semantics_64.png" title="" alt="" />Sémantique,</li>
+							<li><img src="imgs/HTML5_Multimedia_64.png" title="" alt="" />Multimédia,</li>
+							<li><img src="imgs/HTML5_Styling_64.png" title="" alt="" />CSS3,</li>
+							<li><img src="imgs/HTML5_Connectivity_64.png" title="" alt="" />Connectivité,</li>
+							<li><img src="imgs/HTML5_Offline_Storage_64.png" title="" alt="" />Stockage &amp; Offline,</li>
+							<li><img src="imgs/HTML5_Performance_64.png" title="" alt="" />Performances,</li>
+							<li><img src="imgs/HTML5_Device_Access_64.png" title="" alt="" />Périphériques,</li>
+							<li><img src="imgs/HTML5_3D_Effects_64.png" title="" alt="" />Graphisme 2D &amp; 3D.</li>
+						</ul>
+					</li>
+					<li>Support</li>
+					<li>Besoin ?</li>
+				</ul>
+          </section>
+        </div>
+
+        <div class="slide transitionSlide" id="intro-title">
+          <section class="middle">
+            <h2>Contexte</h2>
+          </section>
+        </div>
+
+        <div class="slide" id="history-slide">
+          <style>
+				#history-slide ul { margin-left: -2em; font-size: 26px; }
+				#history-slide ul li { margin-left: 2em; }
+          </style>
+          <section>
+            <h2>Historique</h2>
+				<ul class="two-columns"> 
+					<li>1991 <acronym title="HyperText Markup Language">HTML</acronym></li>
+					<li>1996 <acronym title="Cascading Style Sheets">CSS</acronym> &amp; JS</li>
+					<li>1998 CSS2</li>
+					<li>1999 HTML4.01</li>
+					<li>2000 <acronym title="eXtensible HyperText Markup Language">XHTML</acronym></li>
+					<li>2002 Tableless design</li>
+					<li>2004 <acronym title="Web Hypertext Application Technology Working Group">WHATWG</acronym></li>
+					<li>2005 <acronym title="Asynchronymous JavaScript and Xml">AJAX</acronym></li>
+					<li>2007 XHTML2, WHATWG&nbsp;→&nbsp;<acronym title="World Wide Web Consortium">W3C</acronym></li>
+					<li>2009 Fin XHTML2</li>
+					<li>2011 HTML5, CSS3 &amp; JS</li>
+				</ul>
+          </section>
+        </div>
+
+        <div class="slide" id="clarification-slide">
+          <style>
+				#clarification-slide div { font-size: 48px; margin-top: 3em; }
+				#clarification-slide pre { display: inline; width: 2em; }
+          </style>
+          <section class="center">
+            <h2>HTML5 ?</h2>
+				<div>HTML5 ~= <pre class="html">HTML    </pre> + <pre class="css">CSS    </pre> 
+					+ <br/><pre class="js">JavaScript    </pre> + <pre class="svg">SVG    </pre>
+					+ <pre class="webgl">WebGL    </pre>
+          </section>
+        </div>
+
+        <div class="slide transitionSlide" id="html5-title">
+          <section class="middle">
+            <h2>HTML5</h2>
+				<img src="imgs/HTML5_Logo_256.png" title="Logo HTML5" alt="Logo HTML5" />
+          </section>
+        </div>
+
+        <div class="slide transitionSlide" id="semantics-title">
+          <section class="middle">
+            <h2>Sémantique</h2>
+            <img src="imgs/HTML5_Semantics_64.png" title="Sémantique" alt="Sémantique" />
+          </section>
+        </div>
+
+        <div class="slide" id="tags-slide">
+          <section>
+            <h2>Nouvelles balises</h2>
+<pre class="html">
+&lt;body&gt; 
+  &lt;header&gt; 
+  &lt;nav&gt;...
+  &lt;section&gt; 
+    &lt;article&gt;
+      ...
+      &lt;aside&gt;...&lt;/aside&gt; 
+      &lt;time datetime="2010-03-17"&gt;17 mars 2010&lt;/time&gt; 
+    &lt;/article&gt; 
+  &lt;/section&gt; 
+  &lt;footer&gt;...
+&lt;/body&gt;
+</pre>
+          </section>
+        </div>
+
+        <div class="slide" id="microformat-slide">
+          <style>
+				#microformat-slide { font-size: 30px; }
+				#microformat-slide .org { font-weight: bold; }
+				#microformat-slide .adr { font-size: 26px; }
+				#microformat-slide a { font-size: 16px; float: right; color: grey; }
+          </style>
+          <section>
+            <h2>Microformat</h2>
+<pre class="html">
+&lt;div id="hcard-Patrick-Antivackis" class="vcard"&gt;
+ &lt;span class="fn"&gt;Patrick Antivackis&lt;/span&gt;
+ &lt;div class="org"&gt;Valtech&lt;/div&gt;
+ &lt;div class="adr"&gt;
+   &lt;div class="street-address"&gt;103, rue de Grenelle&lt;/div&gt;
+   &lt;span class="locality"&gt;PARIS&lt;/span&gt;
+   &lt;span class="postal-code"&gt;75006&lt;/span&gt;
+&lt;/div&gt;
+</pre>
+				<div id="hcard-Patrick-Antivackis" class="vcard">
+				 <span class="fn">Patrick Antivackis</span>
+				 <div class="org">Valtech</div>
+				 <div class="adr">
+					<div class="street-address">103, rue de Grenelle</div>
+					<span class="locality">PARIS</span>
+					<span class="postal-code">75006</span>
+				</div>
+				<a href="http://www.google.com/webmasters/tools/richsnippets?url=" target="blank">Google</a>
+          </section>
+			 <script defer>
+				(function() {
+					var link = document.querySelector('#microformat-slide a');
+					link.href += window.location;
+				})();
+			 </script>
+        </div>
+
+        <div class="slide" id="microdata-slide">
+          <section>
+            <h2>Microdata</h2>
+<pre class="html">
+&lt;p itemscope itemtype="http://www.data-vocabulary.org/Person"&gt;
+  Je m'appelle &lt;span itemprop="name"&gt;John&lt;/span&gt;,
+  je suis &lt;span itemprop="title"&gt;développeur Web&lt;/span&gt; et
+  je suis un ami de &lt;span itemprop="friend"&gt;Larry&lt;/span&gt;.
+&lt;/p&gt;
+</pre>
+				<p itemscope itemtype="http://www.data-vocabulary.org/Person">
+					Je m'appelle <span itemprop="name">John</span>, 
+					je suis <span itemprop="title">développeur Web</span> et 
+				   je suis un ami de <span itemprop="friend">Larry</span>.</p>
+				</p>
+          </section>
+        </div>
+
+        <div class="slide" id="forms-slide">
+          <style>
+				#forms-slide p.two-columns { text-align: right; margin-right: 1.5em; }
+				#forms-slide label { margin-right: 0.5em; font-size: 30px; }
+				#forms-slide input[type=range] { width: 50%;}
+				#forms-slide input { border:1px solid #654; vertical-align: 12%;  }
+				#forms-slide input:invalid 	{ background-color: #C00; }
+				#forms-slide input[required]	{ border: 3px solid #654; }
+          </style>
+          <section>
+            <h2>Formulaires</h2>
+<pre class="html">
+&lt;input type=email placeholder="example@domain.com" required&gt;
+</pre><pre class="css">
+input:invalid    { background-color: #C00; } // fond rouge si invalide
+input[required]  { border: 2px solid #654; } // bordure épaisse si requis
+</pre>
+				<p class="two-columns"> 
+					<label>Email</label><input name=email type=email placeholder="example@domain.com" required><br>
+					<label>Nombre</label><input type=number name=number title="Number"  value=42 min=1 max=50><br>
+					<label>Couleur</label><input type=color name=color title="Couleur"><br>
+					<label>URL</label><input type=url name=color title="URL" value="http://www.google.com"><br>
+					<label>Plage</label><input type=range name=range value="55"  title="A range" min=0 max=100 step=1><br>
+					<label>Tél.</label><input name=phone type=tel placeholder="+447500000000"><br>
+					<label>Date</label><input name=date type=date title="Date (yyyy-mm-dd)" value="2009-01-15"><br>
+					<label>Heure</label><input type=time name=time title="Heure (hh:mn)" value="08:16"><br>
+					<label>RegEx.</label><input type=tel name=tel title="N° à 10 chiffres sans espace" pattern="^0[1-689][0-9]{8}$" placeholder="0601020304"><br>
+					<label>Recherche</label><input type=search name=search value="valtech"><br>
+				</p> 
+          </section>
+        </div>
+
+        <div class="slide transitionSlide" id="multimedia-title">
+          <section class="middle">
+            <h2>Multimédia</h2>
+            <img src="imgs/HTML5_Multimedia_64.png" title="Multimédia" alt="Multimédia" />
+          </section>
+        </div>
+
+    	 <div class="slide" id="audio-slide">
+          <style>
+				#audio-slide audio { margin: 4em 30%; }
+          </style>
+          <section>
+            <h2>Audio</h2>
+<pre class="html">
+&lt;audio controls loop preload&gt;
+  &lt;source src="valtech.aac" /&gt;
+  &lt;source src="valtech.ogg" /&gt;
+  &lt;source src="valtech.mp3" /&gt;
+  &lt;!-- solution alternative (flash) pour les anciens navigateurs --&gt;
+&lt;/audio&gt;
+</pre>
+				<audio controls loop preload>
+					<source src="auds/valtech.aac" />
+					<source src="auds/valtech.ogg" />
+					<source src="auds/valtech.mp3" />
+					Votre navigateur ne supporte pas la balise audio.
+				</audio>
+          </section>
+        </div>
+
+        <div class="slide" id="video-slide">
+          <style>
+				#video-slide video { margin: 1em 22%; }
+          </style>
+          <section>
+            <h2>Vidéo</h2>
+<pre class="html">
+&lt;video controls loop preload&gt;
+  &lt;source src="valtech.mp4" /&gt;
+  &lt;source src="valtech.webm" /&gt;
+  &lt;source src="valtech.ogv" /&gt;
+  &lt;!-- solution alternative (flash) pour les anciens navigateurs --&gt;
+&lt;/video&gt;
+</pre>
+				<video controls loop preload width=480 height=320>
+					<source src="vids/valtech.mp4" />
+					<source src="vids/valtech.webm" />
+					<source src="vids/valtech.ogv" />
+					<!-- Remove YouTube fallback <object width="480" height="390"><param name="movie" value="http://www.youtube.com/v/qctovMeRczU?fs=1&amp;hl=en_US"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/qctovMeRczU?fs=1&amp;hl=en_US" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="390"></embed></object>-->
+				</video>
+
+          </section>
+        </div>
+
+        <div class="slide transitionSlide" id="styling-title">
+          <section class="middle">
+            <h2>CSS3</h2>
+            <img src="imgs/HTML5_Styling_64.png" title="CSS3" alt="CSS3" />
+          </section>
+        </div>
+
+        <div class="slide" id="webfont-slide">
+          <style>
+            #webfont-slide p { font-size: 50px; font-family: 'Just Another Hand', arial, serif; }
+          </style>
+          <section>
+            <h2>Web Fonts</h2>
+				<h3>Embarquez vos polices :</h3>
+<pre class="css">
+@font-face {
+   font-family: 'Just Another Hand';
+   src: url('Just+Another+Hand.eot'),
+        url('Just+Another+Hand.ttf') format('truetype'),
+        url('Just+Another+Hand.svg#font') format('svg'); 
+}</pre>
+<pre class="html">&lt;p contentEditable&gt;Voici une phrase en police [...]&lt;/p&gt;</pre>
+				<p contentEditable>Voici une phrase en police 'Just Another Hand', où le texte est directement éditable.</p>
+          </section>
+        </div>
+
+        <div class="slide" id="multicolumn-slide">
+          <style>
+            #multicolumn-slide p {
+					font-size: 16px;
+					text-align: justify;
+					column-rule: 1px solid grey; -webkit-column-rule: 1px solid grey; -moz-column-rule: 1px solid grey; -o-column-rule: 1px solid grey; -msie-column-rule: 1px solid grey;
+					column-gap: 2em; -webkitcolumn-gap: 2em; -moz-column-gap: 2em; -o-column-gap: 2em; -msie-column-gap: 2em;
+            }
+				@media (min-width:400px) {
+					#multicolumn-slide p { column-count: 1; -webkit-column-count: 1; -moz-column-count: 1; -o-column-count: 1; -msie-column-count: 1; }
+				}
+				@media (min-width:800px) {
+					#multicolumn-slide p { column-count: 2; -webkit-column-count: 2; -moz-column-count: 2; -o-column-count: 2; -msie-column-count: 2; }
+				}
+				@media (min-width:1000px) {
+					#multicolumn-slide p { column-count: 3; -webkit-column-count: 3; -moz-column-count: 3; -o-column-count: 3; -msie-column-count: 3; }
+				}
+          </style>
+          <section>
+            <h2>Multi-columns &amp; Media-queries</h2>
+<pre class="css">
+@media (screen and min-width:400px) {
+  p { column-count: 1; }
+}
+@media (screen and min-width:800px) {
+  p { column-count: 2; column-rule: 1px solid grey; column-gap: 1em; }
+}
+@media (screen and min-width:1000px) {
+  p { column-count: 3; column-rule: 1px solid grey; column-gap: 1em; }
+}</pre>
+				<div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vehicula nunc eu lorem mattis at vehicula ligula semper. In nec leo id justo ornare pellentesque. Cras neque velit, ullamcorper in malesuada vitae, hendrerit a justo. Ut vel convallis justo. Vestibulum nec urna ut sapien ullamcorper tempus. Etiam venenatis tristique neque in blandit. Praesent pretium, ante quis tristique porttitor, tortor diam tincidunt nibh, non tincidunt odio nisi fermentum odio. Donec malesuada est vel felis placerat nec faucibus nulla mattis. Suspendisse potenti. Praesent tellus erat, ullamcorper vitae pulvinar non, luctus ut leo. Maecenas et mauris id enim viverra tristique. Suspendisse tincidunt libero et dui ultricies at mollis elit gravida. Suspendisse ullamcorper neque non diam pretium pretium. Nunc laoreet, massa vitae suscipit condimentum, neque nibh auctor dolor, et elementum metus dolor imperdiet purus. Pellentesque laoreet lacus quis augue convallis ut convallis risus volutpat. Nunc vestibulum ultrices mi, vitae scelerisque libero lacinia et. Aenean id</p></div>
+          </section>
+        </div>
+
+        <div class="slide" id="roundborders-slide">
+          <style>
+            #roundborders-slide p {	margin-left: 38%; width: 200px; height: 200px; text-align: center; border: 2px solid #654; }
+				#roundborders-slide input { margin-left: 35%; width: 250px; }
+          </style>
+          <section>
+            <h2>Coins arrondis</h2>
+<pre class="css">p {
+  border: 2px solid #654;
+  border-radius: 10px;
+}</pre>
+				<p style="-moz-border-radius:30px; -webkit-border-radius:30px; border-radius:30px;"><br>Quelques<br>lignes de<br>texte</p>
+				<input type=range value=30 min=0 max=120 />
+          </section>
+			 <script defer>
+				(function() {
+					var 	range = document.querySelector('#roundborders-slide input'),
+							p	= document.querySelector('#roundborders-slide p');
+					range.addEventListener('change', function(e) {
+						var v = range.value;
+						p.setAttribute('style', '-moz-border-radius:'+v+'px; -webkit-border-radius:'+v+'px; border-radius:'+v+'px;');
+					}, false);
+				})();
+			 </script>
+        </div>
+
+        <div class="slide" id="gradients-slide">
+          <style>
+				#gradients-slide div { margin: 1em 0; display: block; border: 1px solid black; }
+            #gradients-slide .linear { 
+					width: 98%; height: 40px;
+					background: gradient(linear, left top, right bottom, from(orange), to(red), color-stop(0.5, yellow));
+					background: -webkit-gradient(linear, left top, right bottom, from(orange), to(red), color-stop(0.5, yellow));
+					background: -moz-gradient(linear, left top, right bottom, from(orange), to(red), color-stop(0.5, yellow));
+				}
+				#gradients-slide .radial {
+					width: 180px; height: 180px; margin-left: 40%;
+					background: gradient(radial, 100 100, 0, 100 100, 100, from(#FD890A), to(#FFF3DB));
+					background: -webkit-gradient(radial, 100 100, 0, 100 100, 100, from(#FD890A), to(#FFF3DB));
+					background: -moz-gradient(radial, 100 100, 0, 100 100, 100, from(#FD890A), to(#FFF3DB));
+				}
+          </style>
+          <section>
+            <h2>Dégradés</h2>
+<pre class="css">p.linear {
+ background: gradient(linear, left top, right bottom, 
+   from(orange), to(red), color-stop(0.5, yellow));
+}
+p.radial {
+ background: gradient(radial, 100 100, 0, 100 100, 100, 
+   from(orange), to(white));
+}</pre>
+				<div class="linear"></div>
+				<div class="radial"></div>
+          </section>
+			 <script defer>
+				(function() {
+					var 	range = document.querySelector('#roundborders-slide input'),
+							p	= document.querySelector('#roundborders-slide p');
+					range.addEventListener('change', function(e) {
+						var v = range.value;
+						p.setAttribute('style', '-moz-border-radius:'+v+'px; -webkit-border-radius:'+v+'px; border-radius:'+v+'px;');
+					}, false);
+				})();
+			 </script>
+        </div>
+
+        <div class="slide" id="transitions-slide">
+          <style>
+				#transitions-slide p { width: 98%; height: 300px; text-align: center; margin: 1em 0 0 0;}
+				#transitions-slide img.transition { 
+					-webkit-transition: all 1s ease-in-out;
+					-moz-transition: all 1s ease-in-out;
+					-o-transition: all 1s ease-in-out;
+					transition: all 1s ease-in-out;
+				}
+				#transitions-slide img.animate { 
+					-webkit-transform: rotate(360deg) translate(0,4em) scale(1.6);
+      			-moz-transform: rotate(360deg) translate(0,4em) scale(1.6);
+					-o-transform: rotate(360deg) translate(0,4em) scale(1.6);
+					transform: rotate(360deg) translate(0,4em) scale(1.6);
+				}
+          </style>
+          <section>
+            <h2>Transitions, animations</h2>
+<pre class="css">.animate { 
+  transition: all 1s ease-in-out; 
+  transform: rotate(360deg) translate(0,4em) scale(1.6);
+}</pre>
+				<p>
+					<img class="transition" src="imgs/valtech.png" alt="" title="Logo Valtech" /><br/>
+					<button>Animer !</button>
+				</p>
+          </section>
+			 <script defer>
+				(function() {
+					var 	button = document.querySelector('#transitions-slide button'),
+							img = document.querySelector('#transitions-slide img.transition');
+					button.addEventListener('click', function() {
+						if (img.classList) {
+							img.classList.toggle('animate');
+						} else {
+							if (img.className.indexOf('animate') != -1)
+								img.className = 'transition';
+							else
+								img.className += ' animate';
+						}
+					}, false);
+				})();
+			 </script>
+        </div>
+
+        <div class="slide transitionSlide" id="connectivity-title">
+          <section class="middle">
+            <h2>Connectivité</h2>
+            <img src="imgs/HTML5_Connectivity_64.png" title="Connectivité" alt="Connectivité" />
+          </section>
+        </div>
+
+        <div class="slide" id="websocket-slide">
+			 <style>
+				#websocket-slide p { font-size: 48px; text-align: center; }
+				#websocket-slide p img { margin-top: 1em; }
+			 </style>
+          <section>
+            <h2>WebSocket</h2>
+				<h3>Connexion permanente bi-directionnelle :</h3>
+<pre class="js">var ws = new WebSocket('ws://<span id="websocketHost"></span>/');
+ws.send('here my data');
+ws.onmessage = function(message) {
+	someCode();
+}</pre>
+				<p class="center">
+					A vous de jouer : <a id="urlToSlide" href="/" contenteditable>http://localhost/</a><br/>
+				</p>
+          </section>
+          <script defer>
+			(function() {
+				var element = document.querySelector('#urlToSlide');
+				var url = localStorage['urlToSlide'];
+				if (!url)
+					url = window.location.protocol + '//' + window.location.host + window.location.pathname.replace('html5.html', '');
+				element.innerHTML = url;
+				element.setAttribute('href', url);
+				document.querySelector('#websocketHost').innerHTML = window.location.host;
+				element.addEventListener('blur', function() {
+					if (element.innerHTML != url)
+						localStorage['urlToSlide'] = element.innerHTML;
+				}, false);
+			})();
+          </script>
+        </div>
+
+        <div class="slide transitionSlide" id="offline-storage-title">
+          <section class="middle">
+            <h2>Stockage &amp; Offline</h2>
+            <img src="imgs/HTML5_Offline_Storage_64.png" title="Stockage &amp; offline" alt="Stockage &amp; offline" />
+          </section>
+        </div>
+
+        <div class="slide" id="storage-slide">
+          <style>
+				#storage-slide pre { margin-bottom: 2em; }
+          </style>
+          <section>
+            <h2>localStorage et sessionStorage</h2>
+				<h3>Persistez des données entre plusieurs pages :</h3>
+<pre class="js">
+sessionStorage['key'] = value;
+
+// Quelques pages plus tard...
+var value = sessionStorage['key'];
+</pre><pre class="js">
+localStorage['key'] = value;
+
+// Quelques jours plus tard...
+var value = localStorage['key'];
+</pre>
+          </section>
+        </div>
+
+        <div class="slide" id="indexedDb-slide">
+          <style>
+				#storage-slide pre { margin-bottom: 2em; }
+          </style>
+          <section>
+            <h2>IndexedDB</h2>
+				<ul>
+					<li>Base de données clé/valeur,</li>
+					<li>par domaine,</li>
+					<li>transactionelle,</li>
+					<li>avec des index de recherche.</li>
+				</ul>
+          </section>
+        </div>
+
+        <div class="slide" id="offline-mode-slide">
+          <style>
+				#offline-mode-slide pre { margin-bottom: 1em; }
+          </style>
+          <section>
+            <h2>Offline</h2>
+				<h3>Naviguez sans être connecté :</h3>
+<pre class="html">
+&lt;html manifest="cache-manifest"&gt;
+</pre>
+<pre class="manifest">
+CACHE MANIFEST
+index.html
+style/default.css
+images/logo.png
+images/backgound.png
+
+NETWORK:
+server.cgi</pre>
+          </section>
+        </div>
+
+        <div class="slide transitionSlide" id="performance-title">
+          <section class="middle">
+            <h2>Performances</h2>
+            <img src="imgs/HTML5_Performance_64.png" title="Performance" alt="Performance" />
+          </section>
+        </div>
+
+        <div class="slide" id="webworker-slide">
+          <style>
+				#webworker-slide p.clock {
+					margin: 0.5em 26%; padding: 0.25em; width: 45%;
+					border: 1px solid white; border-radius: 20px;
+				}
+          </style>
+          <section>
+            <h2>WebWorkers</h2>
+				<h3>Déportez vos traitements lourds :</h3>
+<pre class="js">new Worker('primeResolver.js');
+worker.postMessage("{ 'action': 'compute'}");</pre>
+				<p class="clock">Horloge : <span></span></p>
+				<p>				
+					<label for="webworkers-check">Utilisation des Web Workers ?</label>
+					<input type="checkbox" name="webworkers-check" id="webworkers-check" />
+					<input type="button" name="go" value="lancer le calcul" />
+				</p>
+				<p class="results"></p>
+          </section>
+          <script defer>
+				(function() {
+					Clock = function(element) {
+						this.element = element;
+						this.interval = null;
+					}
+					Clock.prototype = {
+						start: function() {
+							var clock = this;
+							this.interval = setInterval(function() { 	clock.update(); }, 40);
+						},
+						stop: function() {
+							clearInterval(this.interval);
+						},
+						update: function() {
+							var d = new Date();
+							this.element.innerHTML = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + '.' + d.getMilliseconds();
+						}
+					}
+
+					new Clock(document.querySelector('#webworker-slide p.clock span')).start();
+			 			 
+					var primeResolver;
+					var 	begin = 4321948321980, step = 250, end = begin + step;
+
+					var worker = new Worker('scripts/primeResolver.js');
+
+					var checkbox = document.getElementById('webworkers-check');
+
+					document.querySelector('#webworker-slide input[name=go]').addEventListener('click', function() {
+		 
+						var r = document.querySelector('#webworker-slide p.results');
+						r.innerHTML = '';
+		 
+						if (checkbox.checked) {
+							r.innerHTML = 'Résultats <strong>avec</strong> WebWorkers : ';
+							worker.onmessage = function(event) {
+								r.innerHTML += event.data + ' ';
+							}
+							worker.postMessage('{"min":' + begin + ', "max":' + end + '}');
+		 
+						} else {
+							setTimeout(function() {
+								r.innerHTML = 'Résultats <strong>sans</strong> WebWorkers : ';
+								primeResolver = new PrimeResolver();
+								primeResolver.searchForPrime(begin, end, function(i) { r.innerHTML += i + ' '; });
+							}, 0);
+						}
+		 
+						begin = end;
+						end += step;
+		 
+					}, false);
+			 
+				})();
+          </script>
+        </div>
+
+        <div class="slide transitionSlide" id="device-access-title">
+          <section class="middle">
+            <h2>Accès aux périphériques</h2>
+            <img src="imgs/HTML5_Device_Access_64.png" title="Accès aux périphériques" alt="Accès aux périphériques" />
+          </section>
+        </div>
+
+        <div class="slide" id="geolocation-slide">
+			 <style>
+				#geolocation-slide img.map { margin: 0.25em 10%; }
+				#geolocation-slide p { font-size: 30px; margin: 0.25em 0; height: 80px; }
+			 </style>
+          <section>
+            <h2>Géolocalisation</h2>
+<pre class="js">navigator.geolocation.getCurrentPosition(function(position) {
+ // latitude, longitude, altitude, précision, direction, vitesse
+});</pre>
+				<p><button id="showMap">Localisez-moi</button> <span class="position"></span></p>
+				<img class="map" src="http://maps.google.com/maps/api/staticmap?zoom=8&amp;size=650x280&amp;sensor=false&amp;center=48.856666,2.350987" alt="Carte" title="Carte" />
+          </section>
+          <script defer>
+          (function() {
+				document.getElementById('showMap').addEventListener("click", function() {
+					var pos = document.querySelector('#geolocation-slide .position'),
+						 map = document.querySelector('#geolocation-slide img.map');
+					if (navigator.geolocation) {
+						navigator.geolocation.getCurrentPosition(function(position) {
+							var la = position.coords.latitude, lo = position.coords.longitude, ac = position.coords.accuracy, metric = 'mètres';
+							if (ac > 10000) { ac /= 10000; metric = 'kilo' + metric; }
+							pos.innerHTML = 'Latitude: '+ la.toFixed(5) +', longitude: '+ lo.toFixed(5) +'<br>Précision: '+ ac +' '+ metric;
+							map.setAttribute('src', 'http://maps.google.com/maps/api/staticmap?zoom=15&size=650x280&sensor=false&center=' + la + ',' + lo);
+						});
+					} else {
+						pos.innerHTML = 'Ce navigateur ne supporte pas la géolocation.';
+					} 
+				}, false);
+          })();
+          </script>
+        </div>
+
+        <div class="slide" id="orientation-slide">
+			 <style>
+				#orientation-slide p { margin: 1.5em 0; }
+				#orientation-slide p.center { width: 98%; font-size: 72px; text-align: center; }
+			 </style>
+          <section>
+            <h2>Accéléromètre</h2>
+				<h3>Relevez les capteurs :</h3>
+<pre class="js">
+document.addEventListener("orientationchange", function(orient) {
+ // axes alpha, beta et gamma
+});</pre>
+				<p class="orientation center">Orientation<span></span></p>
+          </section>
+          <script defer>
+          (function() {
+				window.addEventListener("MozOrientation", orientationChange, false);
+				window.addEventListener("deviceorientation", orientationChange, false);
+				document.addEventListener("orientationchange", orientationChange, false);
+
+				var p = document.querySelector('#orientation-slide p.orientation');
+				var span = p.querySelector('span');
+				var i = 0;
+
+				function orientationChange(o) {
+					i++;
+					var v = '';
+
+					if (window.orientation)
+						v += ' : ' + window.orientation + "°";
+					if (o && o.orientation)
+						v += ' : ' + o.orientation + "°";
+					if (o && (o.x || o.y) || (o.alpha || o.beta)) {
+						if (i % 2 == 0)
+							var x = o.x || o.alpha;
+							var y = o.y || o.beta;
+							var r = 'rotate(' + (-x * 100) + 'deg)';
+							var s = 'scale(' + (y + 1) + "," + (y + 1)  + ')';
+							p.style.MozTransform = r + ' ' + s;
+					}
+					span.innerHTML = v;
+				 }
+          })();
+          </script>
+        </div>
+
+        <div class="slide transitionSlide" id="graphism-title">
+          <section class="middle">
+            <h2>Graphisme 2D et 3D</h2>
+            <img src="imgs/HTML5_3D_Effects_64.png" title="Graphisme 2D et 3D" alt="Graphisme 2D et 3D" />
+          </section>
+        </div>
+
+        <div class="slide" id="svg-slide">
+          <style>
+				#worldCountries { margin-top: 1em; width: 1000px;	height: 480px;	}
+          </style>			
+          <section>
+            <h2>SVG</h2>
+				<h3>Dessinez en vectoriel :</h3>
+<pre class="html">&lt;svg&gt;&lt;circle cx=150 cy=150 r=100 fill=orange /&gt;&lt;/svg&gt;</pre>
+				<object data="imgs/WorldCountries.svg" type="image/svg+xml" id="worldCountries" ></object>
+          </section>
+        </div>
+
+        <div class="slide" id="canvas-graph-slide">
+          <style>
+				#canvas-graph-slide canvas {
+					background-color: white; margin-left: 2%;
+				}
+          </style>			
+          <section>
+            <h2>Canvas</h2>
+				<h3>Dessinez vos graphiques :</h3>
+<pre class="html">&lt;canvas width=400 height=400&gt;</pre>
+<pre class="js">var ctx = canvas.getContext("2d"); // Accès à la zone de dessin
+ctx.moveTo(10, 10);
+ctx.lineTo(50, 50);</pre>
+				<canvas width="800" height="300"></canvas> 
+          </section>
+			<script defer>
+			 var points = [];
+			 var marketIndex = 'Cours du CAC40';
+			 var realQuotes = false;
+          (function() {		 
+				var Graph = function (canvas) {
+					this.canvas = canvas;
+					this.ctx = canvas.getContext("2d");
+					this.height = canvas.height; this.width = canvas.width;
+					this.margin = 20;
+					this.lastValue = 0;
+				}
+		
+				Graph.prototype = {
+					init: function() {
+						this.ctx.clearRect(0, 0, this.width, this.height);
+
+						// Grey grid
+						for (var x = 0; x < this.width; x += 10)    { this.ctx.moveTo(x, 0); this.ctx.lineTo(x, this.height); }
+						for (var y = 0; y < this.height; y += 10)   { this.ctx.moveTo(0, y); this.ctx.lineTo(this.width, y); }
+						this.ctx.strokeStyle = "#ddd"; 
+						this.ctx.stroke();
+				
+						// Axis
+						this.ctx.beginPath(); 
+						{ 
+							 // Horizontal
+							 this.ctx.moveTo(0, this.height - this.margin); 
+							 this.ctx.lineTo(this.width - 10, this.height - this.margin);
+							 this.ctx.lineTo(this.width - 15, this.height - this.margin - 5);
+							 this.ctx.moveTo(this.width - 10, this.height - this.margin);
+							 this.ctx.lineTo(this.width - 15, this.height - this.margin + 5);
+							 
+							 // Vertical
+							 this.ctx.moveTo(this.margin, this.height); 
+							 this.ctx.lineTo(this.margin, this.margin);
+							 this.ctx.lineTo(this.margin - 5, this.margin + 5);
+							 this.ctx.lineTo(this.margin, this.margin);
+							 this.ctx.lineTo(this.margin + 5, this.margin + 5);
+				 		}
+						this.ctx.strokeStyle = "#654"; 
+						this.ctx.stroke();
+				
+						this.ctx.font = 'bold 14px verdana';
+						this.ctx.fillStyle = 'black';
+						this.ctx.textAlign = 'right';
+						this.ctx.fillText(marketIndex, 780, 15, 250);
+					},
+					draw: function(d) {
+					  var x = this.margin,
+							y = this.height - this.margin;
+					  for(var i in d) {
+						 if (i != 0) {
+						   this.ctx.beginPath();
+						   this.ctx.moveTo(x, y);
+						 }
+						 x += 10;
+						 y = this.height - 20 - (d[i] % 10 * 20);
+						 if (i != 0) {
+						   this.ctx.lineTo(x, y);
+						   this.ctx.strokeStyle = "orange"; 
+						   this.ctx.stroke();
+						 }
+
+						 if (i == d.length-1) {
+						 	this.ctx.font = '12px verdana';
+							var status = realQuotes ? ' (cours réel)' : ' (simulation)';
+							this.ctx.textAlign = 'right';
+							this.ctx.fillText(status, 780, 45, 250);
+
+							var value = d[i].toFixed(2);
+							var arrow = '';
+							if (value == this.lastValue) {
+								this.ctx.fillStyle = 'black';
+								arrow = ' ⇨';
+							} else if (value > this.lastValue) {
+								this.ctx.fillStyle = 'green';
+								arrow = ' ⇧';
+							} else {
+								this.ctx.fillStyle = 'red';
+								arrow = ' ⇩';
+							}
+						 	this.ctx.font = '12px verdana';
+							this.ctx.textAlign = 'right';
+							this.ctx.fillText('Dernière valeur:' + value + arrow, 780, 30, 250);
+							this.lastValue = value;
+						 }
+					  }
+					}
+				}
+
+				var canvas = document.querySelector("#canvas-graph-slide canvas");
+				var g = new Graph(canvas);
+				var max = (canvas.width - 50) / 10;
+
+				var draw = function() {	
+
+					if (points.length > max)
+						points = points.slice(1, max);
+
+					g.init();
+					g.draw(points);
+				}
+				setInterval(draw, 1000);
+          })();
+			</script>
+        </div>
+
+        <div class="slide" id="canvas-img-slide">
+			 <style>
+				#canvas-img-slide img, #canvas-img-slide canvas { border: 1px solid white; margin-left: 12%; }
+			 </style>
+          <section>
+            <h2>Canvas</h2>
+				<h3>Manipulez vos images :</h3>
+				<pre class="js">var pixels = ctx.getImageData(0,0,width,height); // Accès aux pixels</pre>
+				<img src="imgs/marylin.jpg" width="260" height="400" />
+				<canvas width="260" height="400"></canvas> 
+          </section>
+          <script defer>
+          (function() {
+				window.addEventListener('load', function() {
+					var image = document.querySelector('#canvas-img-slide img');
+					var canvas = document.querySelector('#canvas-img-slide canvas');
+					var ctx = canvas.getContext('2d');
+					ctx.drawImage(image, 0, 0);
+					var canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+					var bw = function(d) { // Change to greyscale
+						for(var i = 0; i < d.length; i+=4) {
+							var r = d[i], g = d[i+1], b = d[i+2];
+							var brightness = (3*r+4*g+b)>>>3;
+							d[i] = brightness;
+							d[i+1] = brightness;
+							d[i+2] = brightness;
+						}
+						return d;
+					};
+
+					canvasData.data = bw(canvasData.data);
+					ctx.putImageData(canvasData, 0, 0);
+				}, false);
+          })();
+          </script>
+        </div>
+
+
+			<div class="slide" id="canvas-video-slide">
+			 <style>
+				#canvas-video-slide canvas.copy { display: none; }
+				#canvas-video-slide video, #canvas-video-slide canvas { border: 1px solid white; margin: 1em 5em; display: block; }
+				#canvas-video-slide input { width: 250px; }
+				#canvas-video-slide label { margin-right: 20px;}
+				#canvas-video-slide p { float: right; margin: 3em 1em; text-align: right; font-size: 25px; }
+			 </style>
+          <section>
+            <h2>Canvas</h2>
+				<h3>Manipulez vos vidéos :</h3>
+				<p>
+					<label>Rouge :</label><input type=range name=red value=125 min=1 max=255><br>
+					<label>Vert :</label><input type=range name=green value=125 min=1 max=255><br>
+					<label>Bleu :</label><input type=range name=blue value=125 min=1 max=255>
+				</p>
+				<video controls loop preload width=320 height=215>
+					<source src="vids/valtech.mp4" />
+					<source src="vids/valtech.webm" />
+					<source src="vids/valtech.ogv" />
+				</video>
+				<canvas width=320 height=215 class="copy"></canvas> 
+				<canvas width=320 height=215 class="out"></canvas>
+          </section>
+          <script defer>
+          (function() {
+				window.addEventListener('load', function() {
+					var 	video = document.querySelector('#canvas-video-slide video'),
+							copy = document.querySelector('#canvas-video-slide canvas.copy'),
+							out = document.querySelector('#canvas-video-slide canvas.out'),
+							rangeRed = document.querySelector('#canvas-video-slide input[name=red]'),
+							rangeGreen = document.querySelector('#canvas-video-slide input[name=green]'),
+							rangeBlue = document.querySelector('#canvas-video-slide input[name=blue]');
+		 
+					var copyCtx = copy.getContext('2d'),
+						outCtx = out.getContext('2d');
+
+					var filterFunction = function(d) { // Change to greyscale
+						for(var i = 0; i < d.length; i+=4) {
+							var r = d[i], g = d[i+1], b = d[i+2];
+							d[i] = r - rangeRed.value;
+							d[i+1] = g - rangeGreen.value;
+							d[i+2] = b - rangeBlue.value;
+						}
+						return d;
+					}
+
+					var draw = function(video, out, copy, width, height) {
+						if(video.paused || video.ended) return false;
+			 
+						copy.drawImage(video, 0, 0, width, height); // First, copy the current image in an invisible
+			
+						var idata = copy.getImageData(0, 0, width, height); // Get pixels from that canvas
+						idata.data = filterFunction(idata.data); // Apply filter
+						out.putImageData(idata,0,0); // Draw pixels on the visible canvas
+			 
+						setTimeout(function(){ 
+							draw(video, out, copy, width, height);
+						}, 10); // Again but let 25 ms of delay !
+					}
+
+					video.addEventListener('play', function() {
+						copy.width = video.clientWidth;
+						copy.height = video.clientHeight;
+						out.width = video.clientWidth;
+						out.height = video.clientHeight;
+						draw(video, outCtx, copyCtx, video.clientWidth, video.clientHeight);
+					}, false);
+				}, false);
+          })();
+          </script>
+        </div>
+
+        <div class="slide" id="webgl-slide">
+          <style>
+				#webgl-slide p { font-size: 16px; text-align: center; }
+				#webgl-slide p label { margin: 0 1em; padding: 0 1em; border-right: 1px solid white; border-left: 1px solid white; }
+				#webgl-slide div.main { width:640px; margin:auto; position:relative; font-size: 9pt; color: #777; }
+				#webgl-slide canvas { background-color:#444; border:2px solid #777; }
+				#cl_loadinglabel { display:none; color:#FFF; padding:5px; position:absolute; left:280px; top:200px; background-color:#000; height:20px; width:100px; border-radius:5px; border:1px solid #777; opacity:0.5;}
+				#cl_loadinglabel p { margin:0; padding-left:30px; padding-bottom:5px; }
+				#cl_loadinglabel img { position:absolute; left:5px; top:3px; }
+				#cl_loadingbutton { display:block; position:absolute; left:220px; top:220px;}
+				#cl_loadingbutton a { color:#FFF; font-size:12pt; }
+				#cl_nowebgl { display:none; color:#FFF; padding:5px; position:absolute; left:180px; top:200px; background-color:#000; height:20px; width:300px; border-radius:5px; border:1px solid #777; opacity:0.5; }
+				#cl_nowebgl p { margin:0; padding-left:5px; padding-bottom:5px; }
+          </style>			
+          <section>
+            <h2>WebGL</h2>
+				<div class="main">
+					<canvas id="3darea" width="640" height="480">Désolé, votre navigateur ne supporte pas WebGL.</canvas> 
+					<div id="cl_loadinglabel"><p>Chargement...</p><img src="quakelevel/loading2.gif" /></div> 
+					<div id="cl_loadingbutton"><a id="loadWebGl">Cliquez ici pour charger la carte</a></div>
+					<div id="cl_nowebgl"><p>Désolé, votre navigateur ne supporte pas WebGL</p></div>
+				</div>
+				<p>
+					Source: <a href="http://www.ambiera.com/copperlicht/demos.html" target="_blank">Ambiera.com</a>
+					<label>bloquer le clavier : <input type="checkbox" name="remove-keyboard-control" /></label>
+					<a href="#webgl-slide" class="reload">recharger la page</a>
+				</p>
+          </section>
+          <script defer>
+          (function() {
+					function startMapLoading() {
+						var loadingbutton = document.getElementById('cl_loadingbutton');
+						if (loadingbutton) loadingbutton.style.display = 'none';
+														
+						var engine = new CL3D.CopperLicht('3darea');
+						if (!engine.initRenderer()) {
+							var nowebglmessage = document.getElementById('cl_nowebgl');
+							if (nowebglmessage) nowebglmessage.style.display = 'block';
+							return;
+						}
+						
+						var loadinglabel = document.getElementById('cl_loadinglabel');
+						if (loadinglabel) loadinglabel.style.display = 'block';
+						
+						engine.load('quakelevel/quakelevel.ccbjs');
+						
+						engine.OnLoadingComplete = function() {							
+							var loadinglabel = document.getElementById('cl_loadinglabel');
+							if (loadinglabel) loadinglabel.style.display = 'none';
+						};
+					}
+
+					document.querySelector('#webgl-slide a.reload').addEventListener('click', function() { window.location.reload(); }, false);
+					document.querySelector('#webgl-slide input[name=remove-keyboard-control]').addEventListener('click', function() { keyLock = !keyLock; }, false);
+					document.getElementById('loadWebGl').addEventListener('click', startMapLoading, false);
+          })();
+          </script>
+        </div>
+
+        <div class="slide transitionSlide" id="html5-support-title">
+          <section class="middle">
+            <h2>Support</h2>
+          </section>
+        </div>
+
+        <div class="slide" id="html5-support-slide">
+          <style>
+				#html5-support-slide p.center { text-align: center; }
+				#html5-support-slide p.center img { margin: 0.5em 0 0 0; }
+				#html5-support-slide span.small { font-size: 20px; }
+				#html5-support-slide span.star { font-size: 32px; float: right; color: yellow; }
+          </style>			
+          <section>
+            <h2>Support de HTML5</h2>
+				<p class="center">Browsers War 2.0<br/><img src="imgs/browser_logos-64.png" title="" alt="" /></p>
+				<ul>
+					<li>Navigateurs récents <span class="small">(Chrome 10, Safari 5, Firefox 4)</span><span class="star">★★★★★</span></li>
+					<li>Navigateurs mobiles <span class="small">(iOS 4.3, Android 2.3)</span><span class="star">★★★★</span></li>
+					<li>Internet Explorer 9 <span class="star">★★</span></li>
+				</ul>
+          </section>
+        </div>
+
+        <div class="slide transitionSlide" id="html5-need-title">
+          <section class="middle">
+            <h2>Besoin ?</h2>
+          </section>
+        </div>
+
+        <div class="slide" id="facts-w3c-slide">
+          <section class="middle">
+				<h2>Standards du Web<h2>
+				<img src="imgs/w3c.png" alt="w3C logo" title="W3C"/>
+          </section>
+        </div>
+
+        <div class="slide" id="facts-native-slide">
+          <section class="middle">
+				<h2>Technologie native</h2>
+				<img src="imgs/no-flash.jpg" alt="Erreur flash" title="Erreur flash" />
+          </section>
+        </div>
+
+        <div class="slide" id="facts-multiplatform-slide">
+			 <style>
+				#facts-multiplatform-slide img { max-height: 80px;	margin: 0.25em 0.5em; }
+				#facts-multiplatform-slide p { background-color: #FFFFC6; }
+			 </style>
+          <section class="middle">
+				<h2>Multi-plateformes</h2>
+				<p>
+					<img src="imgs/platforms/windows.png" alt="Windows" title="" />
+					<img src="imgs/platforms/apple.png" alt="Apple" title="" />
+					<img src="imgs/platforms/linux.png" alt="Linux" title="" /><br/>
+					<img src="imgs/platforms/android.png" alt="Android" title="" />
+					<img src="imgs/platforms/iOS.png" alt="iOS" title="" />
+					<img src="imgs/platforms/symbian.png" alt="Symbian" title="" /><br/>
+					<img src="imgs/platforms/windows_phone.png" alt="Windows Phone" title="" />
+					<img src="imgs/platforms/blackberry.png" alt="Blackberry" title="" />
+					<img src="imgs/platforms/webos.png" alt="Palm WebOs" title="" />
+				</p>
+          </section>
+        </div>
+
+        <div class="slide" id="facts-progression-slide">
+			 <style>
+				#facts-progression-slide a { display: block; font-size: 16px; border-bottom: none; text-decoration: underline; }
+			 </style>
+          <section class="middle">
+				<h2>Adoption rapide</h2>
+				<img src="imgs/html5progress.png" alt="" title="Progression vidéo HTML5"/>
+				<a href="http://blog.mefeedia.com/html5-feb-2011">source</a>
+          </section>
+        </div>
+
+        <div class="slide" id="facts-progressive-enhancement-slide">
+          <section class="middle">
+				<h2>Amélioration progressive</h2>
+				<img src="imgs/enhanc.gif" alt="" title="" width="300" height="300"/>
+          </section>
+        </div>
+
+        <div class="slide" id="facts-why-not-slide">
+			 <style>
+				#facts-why-not-slide h3 { margin-top: 80px; font-size: 180px; color: #FFFFC6; }
+			 </style>
+          <section class="middle">
+				<h2>Pourquoi pas</h2>
+				<h3>?</h3>
+          </section>
+        </div>
+
+        <div class="slide" id="facts-fondation-slide">
+			<style>
+				#facts-fondation-slide img { max-width: 300px; border: 1px solid orange; }
+			 </style>
+          <section class="middle">
+				<h2>Fondations pour le futur</h2>
+				<img src="imgs/fondation.jpg" alt="" title="Fondations par Asimov" />
+          </section>
+        </div>
+
+        <div class="slide" id="html5-need-slide">
+			 <style>
+				#html5-need-slide p { margin: 1em 1em; }
+			 </style>
+          <section class="middle">
+            <h2>Besoin ?</h2>
+				<p><strong>Oui</strong>, pour construire les applications Web présentes et à venir, nous avons besoin du HTML5 !</p>
+          </section>
+        </div>
+
+        <div class="slide transitionSlide" id="html5-QA-slide">
+          <section class="middle">
+            <h2>Questions ?</h2>
+          </section>
+        </div>
+
+       <div class="slide" id="last-slide">
+          <section>
+				<hgroup>
+					<h1>Le Web a-t-il besoin de HTML5 ?</h1>
+					<ul>
+						<li><h2>Patrick Antivackis</h2>
+							<a href="mailto:patrick.antivackis@valtech-agency.fr">patrick.antivackis@valtech-agency.fr</a><br/>
+							<a href="http://twitter.com/PatrickA8s">@PatrickA8s</a></li>
+						<li><h2>Grégory Paul</h2>
+							<a href="mailto:gregory.paul@valtech.fr">gregory.paul@valtech.fr</a><br/>
+							<a href="http://twitter.com/paulgreg">@paulgreg</a></li>
+					</ul>
+				</hgroup>
+				<img src="imgs/qrcode.png" alt="" title="qrcode vers ce site" /><br/>
+          </section>
+        </div>
+
+      </div> <!-- slides -->
+
+    </div> <!-- presentation -->
+    <script defer src="scripts/socket.io.js"></script><!-- Socket.IO -->
+    <script defer src="scripts/slide-controller.js"></script><!-- For WebSocket communication with server -->
+    <script defer src="scripts/slides.js"></script><!-- Code from Google (with slight changes) -->
+    <script defer src="scripts/primeResolver.js"></script><!-- for WebWorkers -->
+    <script defer src="scripts/copperlicht.js"></script><!-- for webGL -->
+    <!--[if lt IE 9]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">
+    </script>
+    <script>CFInstall.check({ mode: "overlay" });</script>
+    <![endif]-->
+    <script src="src/prettify/prettify.js" onload="prettyPrint();" defer></script>
+  </body>
+</html>
