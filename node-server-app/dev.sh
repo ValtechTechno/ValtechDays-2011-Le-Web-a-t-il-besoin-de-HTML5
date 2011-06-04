@@ -1,2 +1,2 @@
 NODE_ENV=development
-node server.js
+~/local/node/bin/node server.js
