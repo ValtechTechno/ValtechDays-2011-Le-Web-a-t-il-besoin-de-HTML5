@@ -790,8 +790,8 @@ document.addEventListener("orientationchange", function(orient) {
 						if (i % 2 == 0)
 							var x = o.x || o.alpha;
 							var y = o.y || o.beta;
-							var r = 'rotate(' + (-x * 100) + 'deg)';
-							var s = 'scale(' + (y + 1) + "," + (y + 1)  + ')';
+							var r = 'rotate(' + (-y * 100) + 'deg)';
+							var s = 'scale(' + (x + 1) + "," + (x + 1)  + ')';
 							p.style.MozTransform = r + ' ' + s;
 					}
 					span.innerHTML = v;
