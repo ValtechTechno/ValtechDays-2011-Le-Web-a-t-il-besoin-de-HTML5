@@ -370,9 +370,10 @@ input[required]  { border: 2px solid #654; } // bordure épaisse si requis
 <pre class="css">
 @font-face {
    font-family: 'Just Another Hand';
-   src: url('Just+Another+Hand.eot'),
+   src: local('Just Another Hand'),
+        url('Just+Another+Hand.eot'),
         url('Just+Another+Hand.ttf') format('truetype'),
-        url('Just+Another+Hand.svg#font') format('svg'); 
+        url('Just+Another+Hand.woff') format('woff'); 
 }</pre>
 <pre class="html">&lt;p contentEditable&gt;Voici une phrase en police [...]&lt;/p&gt;</pre>
 				<p contentEditable>Voici une phrase en police 'Just Another Hand', où le texte est directement éditable.</p>
