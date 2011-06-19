@@ -29,8 +29,6 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1" />
     <title>Le Web a-t-il besoin de HTML5 ?</title>
-    <link href="http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono" rel="stylesheet" type="text/css" />
-    <link href="http://fonts.googleapis.com/css?family=Just+Another+Hand" rel="stylesheet" type="text/css">
     <link id="prettify-link" href="src/prettify/prettify.css" rel="stylesheet" />
     <link href="css/valtech.css" class="theme" rel="stylesheet" />
     <link href="imgs/favicon.ico" type="image/x-icon" rel="shortcut icon" />
@@ -251,16 +249,16 @@
           <section>
             <h2>Microdata</h2>
 <pre class="html">
-&lt;p itemscope itemtype="http://www.data-vocabulary.org/Person"&gt;
-  Je m'appelle &lt;span itemprop="name"&gt;John&lt;/span&gt;,
-  je suis &lt;span itemprop="title"&gt;développeur Web&lt;/span&gt; et
-  je suis un ami de &lt;span itemprop="friend"&gt;Larry&lt;/span&gt;.
+&lt;p itemscope itemtype="http://schema.org/Person"&gt;
+  Je m'appelle &lt;span itemprop="name"&gt;Grégory&lt;/span&gt;,
+  je suis &lt;span itemprop="jobTitle"&gt;développeur Web&lt;/span&gt; et
+  je suis un ami de &lt;span itemprop="relatedTo"&gt;Patrick&lt;/span&gt;.
 &lt;/p&gt;
 </pre>
-				<p itemscope itemtype="http://www.data-vocabulary.org/Person">
-					Je m'appelle <span itemprop="name">John</span>, 
-					je suis <span itemprop="title">développeur Web</span> et 
-				   je suis un ami de <span itemprop="friend">Larry</span>.</p>
+				<p itemscope itemtype="http://schema.org/Person">
+					Je m'appelle <span itemprop="name">Grégory</span>, 
+					je suis <span itemprop="jobTitle">développeur Web</span> et 
+				   je suis un ami de <span itemprop="relatedTo">Patrick</span>.</p>
 				</p>
           </section>
         </div>
@@ -360,6 +358,10 @@ input[required]  { border: 2px solid #654; } // bordure épaisse si requis
 
         <div class="slide" id="webfont-slide">
           <style>
+            @font-face {
+              font-family: 'Just Another Hand'; font-style: normal; font-weight: normal;
+              src: local('Just Another Hand'), local('JustAnotherHand-Regular'), url('./css/JustAnotherHand.woff') format('woff');
+            }
             #webfont-slide p { font-size: 50px; font-family: 'Just Another Hand', arial, serif; }
           </style>
           <section>
