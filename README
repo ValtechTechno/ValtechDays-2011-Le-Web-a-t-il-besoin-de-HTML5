@@ -1,0 +1,12 @@
+Ceci est une présentation sur HTML5 donnée dans le cadre des Valtech Days en mars 2011.
+
+Elle a été élaboré avec Node.js pour la partie serveur, ainsi qu‘avec le template de Google pour les slides (cf LICENSE).
+
+Pour la découvrir, il vous faudra installer node.js et lancer le script node-server-app/dev.sh.
+Le serveur se lancera sur le port 8080 par défaut.
+D’autres options sont disponibles, je vous invite à regarder le code source du fichier node-server-app/server.js
+
+Utilisez ensuite un navigateur web récent pointant sur http://localhost:8080/ pour profitez de la présentation.
+
+Patrick Antivackis <patrick.antivackis@valtech.fr>
+Grégory Paul <gregory.paul@valtech.fr>
