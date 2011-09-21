@@ -1,4 +1,7 @@
 /*
+ * HTML5 demo server code published under Apache 2 license
+ * Copyright 2011 Valtech SA
+ *
  * Options passed on command line are :
  *  - --offline (optional) : do request quotes wich avoid exception if no connection are available
  *  - --port=X  (optional) : set port number to X instead of 8080 by default
